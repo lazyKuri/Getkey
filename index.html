@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keysytem</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .step {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        .key-display {
+            font-size: 22px;
+            font-weight: bold;
+            color: #e74c3c;
+            background-color: #fef5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            word-break: break-all;
+            border: 1px dashed #e74c3c;
+        }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .btn-success {
+            background-color: #2ecc71;
+        }
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        .hidden {
+            display: none;
+        }
+        #loading {
+            margin: 20px 0;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>get key</h1>
+        
+        <!- bước 1: Yêu cầu vượt link -->
+        <div id="step1" class="step">
+            <h3>BƯỚC 1: VƯỢT QUA LINK</h3>
+            <p>Bạn cần truy cập link bên dưới và hoàn thành yêu cầu để nhận key</p>
+            <a href="https://example.com/link-quang-cao" target="_blank" class="btn">link get key</a>
+            <p>Sau khi hoàn thành, nhấn nút bên dưới</p>
+            <button onclick="checkLinkCompletion()" class="btn btn-success">Tôi đã hoàn thành</button>
+        </div>
+        
+        <!-- Bước 2: Hiển thị key -->
+        <div id="step2" class="step hidden">
+            <h3>BƯỚC 2: Điền key</h3>
+            <p> điền key bạn ở đây</p>
+            <div class="key-display" id="activationKey">KEY-Kuri-depzai-handsome-537182044224#%</div>
+            <button onclick="copyToClipboard()" class="btn">Sao chép key</button>
+            <p id="copyStatus"></p>
+        </div>
+        
+        <!-- Loading -->
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Đang kiểm tra...</p>
+        </div>
+    </div>
+
+    <script>
+        // Danh sách key do bạn tự đặt
+        const availableKeys = [
+            "FREE_hostbyKuri758383",
+            "FREE_Kuridzvcl738263",
+            "KURI_dzprovip9183863",
+            "WINDYONTOP_spendnigga",
+            "Uh-bn-gay",
+            "skidnivjdvuwojsonsof9",
+        ];
+        
+        // Kiểm tra người dùng đã vượt link chưa
+        function checkLinkCompletion() {
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('loading').classList.remove('hidden');
+            
+            // Giả lập thời gian chờ kiểm tra (3 giây)
+            setTimeout(function() {
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('step2').classList.remove('hidden');
+                
+                // Lấy ngẫu nhiên 1 key từ danh sách
+                const randomIndex = Math.floor(Math.random() * availableKeys.length);
+                document.getElementById('activationKey').textContent = availableKeys[randomIndex];
+                
+                // Lưu vào localStorage để tránh spam F5
+                localStorage.setItem('keyReceived', 'true');
+            }, 3000);
+        }
+        
+        // Chức năng copy key
+        function copyToClipboard() {
+            const keyText = document.getElementById('activationKey').textContent;
+            navigator.clipboard.writeText(keyText).then(function() {
+                document.getElementById('copyStatus').textContent = 'Đã sao chép key!';
+                document.getElementById('copyStatus').style.color = 'green';
+            }).catch(function() {
+                // Fallback cho trình duyệt cũ
+                const textarea = document.createElement('textarea');
+                textarea.value = keyText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                document.getElementById('copyStatus').textContent = 'Đã sao chép key!';
+                document.getElementById('copyStatus').style.color = 'green';
+            });
+        }
+        
+        // Kiểm tra nếu đã nhận key rồi thì hiển thị luôn
+        window.onload = function() {
+            if (localStorage.getItem('keyReceived') === 'true') {
+                document.getElementById('step1').classList.add('hidden');
+                document.getElementById('step2').classList.remove('hidden');
+                
+                // Lấy ngẫu nhiên 1 key từ danh sách
+                const randomIndex = Math.floor(Math.random() * availableKeys.length);
+                document.getElementById('activationKey').textContent = availableKeys[randomIndex];
+            }
+        };
+    </script>
+</body>
+</html>
